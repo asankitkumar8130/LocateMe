@@ -38,8 +38,11 @@ class _MapScreenState extends State<MapScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color.fromRGBO(58, 66, 86, 1.0),
       appBar: AppBar(
-        title: Text(location.name),
+        backgroundColor: const Color.fromRGBO(58, 66, 86, 1.0),
+        title: Text(location.name, style : const TextStyle(
+            color: Colors.white, fontWeight: FontWeight.bold)),
       ),
       body: GoogleMap(
           onMapCreated: _onMapCreated,

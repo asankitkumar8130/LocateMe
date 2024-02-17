@@ -20,8 +20,7 @@ jobs:
 
       # Build APK
       - name: Build Release APK
-        run: |
-          ./gradlew assembleDebug
+        run: flutter build apk --release
 #        env:
 #          KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
 #          ALIAS_PASSWORD: ${{ secrets.ALIAS_PASSWORD }}
