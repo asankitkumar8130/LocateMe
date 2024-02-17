@@ -91,7 +91,59 @@ Make two changes to this file. First, add an **#import** statement to pull in th
       }
     }
 
+# Step 1: Set up Firebase App Distribution
+1. **Firebase Project**: Ensure you have a Firebase project. If not, create one at the Firebase Console.
+2. **App Distribution**: Set up App Distribution in your Firebase project by following the official Firebase App Distribution documentation.
+3. **Generate a Firebase Token**: In your terminal, after installing the Firebase CLI, log in with **firebase login:ci** to generate a CI token. You'll use this token for authentication in GitHub Actions.
 
+# Step 2: Store Secrets in GitHub
+Store your Firebase token and any other sensitive information as secrets in your GitHub repository:
+
+1. Go to your GitHub repository.
+2. Click on "Settings" > "Secrets" > "New repository secret".
+3. Add your Firebase token with a name, for example, **FIREBASE_TOKEN**.
+   
+# Step 3: Create the GitHub Actions Workflow
+1. In your repository, create a directory named **'.github/workflows'** if it doesn't already exist.
+2. Create a new YAML file for your workflow, e.g., **firebase_app_distribution.yml**.
+3. Define the workflow:
+
+       name: Deploy to Firebase App Distribution
+
+       on:
+          push:
+            branches:
+              - main
+
+       jobs:
+         build_and_test:
+          runs-on: ubuntu-latest
+          steps:
+          - uses: actions/checkout@v2
+          - uses: actions/setup-java@v1
+            with:
+              java-version: '12' # Or the version you need
+          - uses: subosito/flutter-action@v1
+            with:
+              flutter-version: '2.2.3' # Use the Flutter version your project requires
+          - run: flutter pub get
+          - run: flutter test
+          - run: flutter build apk # or flutter build ios for iOS apps
+
+        deploy:
+          needs: build_and_test
+          runs-on: ubuntu-latest
+          steps:
+          - uses: actions/checkout@v2
+          - uses: wzieba/Firebase-Distribution-Github-Action@v1
+            with:
+              appId: your_firebase_app_id # Find this in your Firebase project settings
+              token: ${{ secrets.FIREBASE_TOKEN }}
+              groups: testers # Or any other group you've set up in Firebase App Distribution
+              file: build/app/outputs/flutter-apk/app-release.apk # Adjust path for your app's build output
+   
+# Step 4: Commit and Push Your Workflow
+Commit the **.github/workflows/firebase_app_distribution.yml** file and push it to your repository. The workflow will trigger on the next push to the **'main'** branch, build and test your app, and, if successful, deploy it to Firebase App Distribution.
 
 ## Getting Started
 
