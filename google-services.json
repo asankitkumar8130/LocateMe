@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "338371944427",
+    "project_id": "locateme-414408",
+    "storage_bucket": "locateme-414408.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:338371944427:android:d2b1ab96b0214f7dfb03ae",
+        "android_client_info": {
+          "package_name": "com.example.locateme"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAwQwx3iV1uNubfHxAbq4BJLPJ5ezNDOgs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

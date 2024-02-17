@@ -1,6 +1,9 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'map/Location.dart';
 import 'map/_MapScreenState.dart';
+import 'dart:async';
+import 'firebase_options.dart';
 
 void main() {
   runApp(const LocationsListScreen());
@@ -9,6 +12,13 @@ void main() {
 // To show location list
 class LocationsListScreen extends StatelessWidget {
   const LocationsListScreen({super.key});
+
+  Future<void> initializeDefault() async {
+    await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform,
+    );
+  }
+
 
   @override
   Widget build(BuildContext context) {

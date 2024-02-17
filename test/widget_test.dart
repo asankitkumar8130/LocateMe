@@ -9,22 +9,23 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:locateme/main.dart';
+import 'package:locateme/map/_MapScreenState.dart';
 
 void main() {
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {
     // Build our app and trigger a frame.
-    await tester.pumpWidget(const MyApp());
+    await tester.pumpWidget(const LocationsListScreen());
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
+    // Find the first list item.
+    final firstListItemFinder = find.byType(ListTile).first;
 
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
+    // Simulate a tap on the first list item.
+    await tester.tap(firstListItemFinder);
 
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+    // Rebuild the widget to reflect the navigation.
+    await tester.pumpAndSettle();
+
+    // Verify that the MapScreen is now displayed.
+    expect(find.byType(MapScreen), findsOneWidget);
   });
 }
