@@ -37,13 +37,3 @@ jobs:
             token: ${{secrets.FIREBASE_TOKEN}}
             groups: testers-group # The group name in Firebase to distribute the app to
             file: build/app/outputs/flutter-apk/app-release.apk  # Adjust the path for iOS or if your build outputs differently
-
-      # Distribute to Firebase App Distribution
-#      - name: Distribute APK to Firebase
-#        run: |
-#            --file ./build/app/outputs/flutter-apk/app-release.apk \
-#            --app 1:338371944427:android:d2b1ab96b0214f7dfb03ae \
-#            --token ${{ secrets.FIREBASE_TOKEN }} \
-#            --groups "beta-testers"
-#        env:
-#          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
