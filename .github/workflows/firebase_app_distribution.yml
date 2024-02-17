@@ -27,7 +27,7 @@ jobs:
       - uses: wzieba/Firebase-Distribution-Github-Action@v1
         with:
           appId: 1:338371944427:android:d2b1ab96b0214f7dfb03ae # Find this in your Firebase project settings
-          token: ${{secrets.AAAATsiKH-s:APA91bFY8MPHFnL0rMeiZuGFtkntXJrXfRStr7x70mybjfpOlbdkt-5uxEN_1euWHc8mVPlmE4ru9qqrm7U1RYjEhrSCArUqWOFWWk9WxU5qsyQ6v5tqi0QZkg4vfQsgbKITuWrZYhtW}}
+          token: ${{secrets.FIREBASE_TOKEN}}
           groups: testers # Or any other group you've set up in Firebase App Distribution
           file: build/app/outputs/flutter-apk/app-release.apk # Adjust path for your app's build output
 
