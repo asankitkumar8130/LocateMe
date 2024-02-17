@@ -36,9 +36,9 @@ jobs:
       # Distribute to Firebase App Distribution
       - name: Distribute APK to Firebase
         run: | 
-          firebase distribution:distribute $PWD/app/build/outputs/apk/release/app-release.apk \ 
+          firebase appdistribution:distribute $PWD/app/build/outputs/apk/release/app-release.apk \ 
           --app ${{secrets.FIREBASE_APP_ID}} 
           --token ${{secrets.FIREBASE_TOKEN}} 
           --groups testers
         env:
-          FIREBASE_CLI_PREVIEWS: distribution
+          FIREBASE_CLI_PREVIEWS: appdistribution
