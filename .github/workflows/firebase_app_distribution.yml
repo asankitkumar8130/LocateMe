@@ -57,9 +57,9 @@ jobs:
       - name: Build Release APK
         run: |
           ./gradlew assembleRelease
-        env:
-          KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
-          ALIAS_PASSWORD: ${{ secrets.ALIAS_PASSWORD }}
+#        env:
+#          KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+#          ALIAS_PASSWORD: ${{ secrets.ALIAS_PASSWORD }}
 
       # Distribute to Firebase App Distribution
       - name: Distribute APK to Firebase
