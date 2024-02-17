@@ -35,4 +35,4 @@ jobs:
 
       # Distribute to Firebase App Distribution
       - name: Distribute APK to Firebase
-        run: firebase appdistribution:distribute app/build/outputs/apk/release/app-release.apk  --app ${{secrets.FIREBASE_APP_ID}} --token ${{secrets.FIREBASE_TOKEN}} --groups testers
+        run: firebase appdistribution:distribute build/app/outputs/flutter-apk/app-release.apk --app ${{secrets.FIREBASE_APP_ID}} --token ${{secrets.FIREBASE_TOKEN}} --groups testers
