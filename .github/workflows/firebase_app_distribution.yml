@@ -25,7 +25,7 @@ jobs:
 
       - name: Set up Firebase Service Account
         run: |
-          echo "${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}" | base64 --decode > $HOME/service-account-key.json
+          echo "${{ secrets.GOOGLE_APPLICATION_CREDENTIALS_BASE64 }}" | base64 --decode > $HOME/service-account-key.json
           echo "GOOGLE_APPLICATION_CREDENTIALS=$HOME/service-account-key.json" >> $GITHUB_ENV
 
       # Install Firebase CLI
