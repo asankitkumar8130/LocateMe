@@ -108,39 +108,52 @@ Store your Firebase token and any other sensitive information as secrets in your
 2. Create a new YAML file for your workflow, e.g., **firebase_app_distribution.yml**.
 3. Define the workflow:
 
-       name: Deploy to Firebase App Distribution
+       name: Android App Distribution
 
        on:
-          push:
-            branches:
-              - main
+         push:
+           branches:
+           - main
 
        jobs:
-         build_and_test:
-          runs-on: ubuntu-latest
+          build-and-distribute:
+          runs-on: macos-latest
           steps:
-          - uses: actions/checkout@v2
-          - uses: actions/setup-java@v1
-            with:
-              java-version: '12' # Or the version you need
-          - uses: subosito/flutter-action@v1
-            with:
-              flutter-version: '2.2.3' # Use the Flutter version your project requires
-          - run: flutter pub get
-          - run: flutter test
-          - run: flutter build apk # or flutter build ios for iOS apps
+           - uses: actions/checkout@v2
 
-        deploy:
-          needs: build_and_test
-          runs-on: ubuntu-latest
-          steps:
-          - uses: actions/checkout@v2
-          - uses: wzieba/Firebase-Distribution-Github-Action@v1
-            with:
-              appId: your_firebase_app_id # Find this in your Firebase project settings
-              token: ${{ secrets.FIREBASE_TOKEN }}
-              groups: testers # Or any other group you've set up in Firebase App Distribution
-              file: build/app/outputs/flutter-apk/app-release.apk # Adjust path for your app's build output
+        # Set up Flutter environment
+        - uses: subosito/flutter-action@v1
+          with:
+            flutter-version: '3.19.0'
+
+        # Setup Java JDK
+        - name: Set up JDK 11
+          uses: actions/setup-java@v2
+          with:
+            java-version: '11'
+            distribution: 'adopt'
+
+        - name: Set up Firebase Service Account
+          run: |
+            echo "${{ secrets.GOOGLE_APPLICATION_CREDENTIALS_BASE64 }}" | base64 --decode > $HOME/service-account-key.json
+            echo "GOOGLE_APPLICATION_CREDENTIALS=$HOME/service-account-key.json" >> $GITHUB_ENV
+
+        # Install Firebase CLI
+        - name: Install Firebase CLI
+          run: npm install -g firebase-tools
+
+        # Fetch dependencies and build the app
+        - name: Fetch dependencies and build AK
+          run: |
+          flutter pub get
+          flutter build apk --release
+
+        # Distribute to Firebase App Distribution
+        - name: Distribute APK to Firebase
+          run: firebase appdistribution:distribute build/app/outputs/flutter-apk/app-release.apk --app ${{secrets.FIREBASE_APP_ID}} --token ${{secrets.FIREBASE_TOKEN}} --groups testers
+          env:
+            GOOGLE_APPLICATION_CREDENTIALS: ${{ env.GOOGLE_APPLICATION_CREDENTIALS }}
+
    
 # Step 4: Commit and Push Your Workflow
 Commit the **.github/workflows/firebase_app_distribution.yml** file and push it to your repository. The workflow will trigger on the next push to the **'main'** branch, build and test your app, and, if successful, deploy it to Firebase App Distribution.
