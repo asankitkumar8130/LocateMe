@@ -27,7 +27,7 @@ class LocationsListScreen extends StatelessWidget {
         appBar: AppBar(
           elevation: 0.1,
           backgroundColor: const Color.fromRGBO(58, 66, 86, 1.0),
-          title: const Text('Locate Me', style : TextStyle(
+          title: const Text('Locates Me', style : TextStyle(
               color: Colors.white, fontWeight: FontWeight.bold),
           ),
         ),
